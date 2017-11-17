@@ -28,7 +28,7 @@ YsummaAsset::register($this);
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="<?= Url::to(['/']); ?>">
                         <center>
                         <img src="<?php echo Yii::getAlias('@web'); ?>/img/ysumma_2.png" width="260" height="50" />
                         </center>
