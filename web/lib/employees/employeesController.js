@@ -22,7 +22,13 @@ $(document).on("ready", function () {
     $("#btn_delete_employee").click(function(){
         $("#frm_delete_employees").submit();
     });
-
+    
+    $("#cbo_entity").change(function(){
+        var number = $("#cbo_entity option:selected").attr("data-number");
+        $("#number_account").attr("data-number",number);
+        $("#number_account").attr("maxlength",number);
+    });
+    
     $('#frm_employees').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -53,20 +59,29 @@ $(document).on("ready", function () {
                     message: 'El formato no es el correcto'
                 }
             },
-            phone_number: {
+            number_account: {
                 validators: {
-                    notEmpty: {message: "El campo teléfono es requerido"}
+                    notEmpty: {message: "El campo número de cuenta es requerido"}
+                },
+                stringLength: {
+                    min: $("#number_account").attr("maxlength"),
+                    message: 'Son necesarios '+$("#number_account").attr("maxlength")+" caractéres."
                 }
             },
-            address_1: {
+            cbo_entity: {
                 validators: {
-                    notEmpty: {message: "El campo dirección es requerido"}
+                    notEmpty: {message: "El campo banco es requerido"}
                 }
             }
         }
     }).on('success.form.bv', function(e) {
         e.preventDefault();
         var msg = "";
+        var data_employee = {};
+        data_employee.ruc = $("#cbo_entity").val();
+        data_employee.number = $("#number_account").val();
+        data_employee.number_length = $("#cbo_entity option:selected").attr("data-number");
+        $("#data_employee").val(JSON.stringify(data_employee));
         $.ajax({
             type: 'POST',
             data: $("#frm_employees").serialize(),

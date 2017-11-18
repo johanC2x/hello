@@ -18,6 +18,7 @@ use app\models\SalesSuspended;
  * @property string $password
  * @property integer $person_id
  * @property integer $deleted
+ * @property string $data
  *
  * @property OsposPeople $person
  * @property OsposInventory[] $osposInventories
@@ -37,6 +38,7 @@ class Employees extends \yii\db\ActiveRecord{
         return [
             [['username', 'password', 'person_id'], 'required'],
             [['person_id', 'deleted'], 'integer'],
+            [['data'], 'safe'],
             [['username', 'password'], 'string', 'max' => 255],
             [['username'], 'unique'],
             [['person_id'], 'exist', 'skipOnError' => true, 'targetClass' => People::className(), 'targetAttribute' => ['person_id' => 'person_id']],

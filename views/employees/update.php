@@ -7,6 +7,7 @@ $this->title = 'YSUMMA';
 $this->registerJsFile('https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', ['position' => View::POS_END]);
 $this->registerJsFile(Yii::getAlias('@web') . '/lib/employees/employeesController.js?v1', ['position' => View::POS_END]);
 $this->registerJsFile(Yii::getAlias('@web') . '/lib/employees/employeesModel.js?v1', ['position' => View::POS_END]);
+$data = json_decode($employee->data);
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -53,10 +54,37 @@ $this->registerJsFile(Yii::getAlias('@web') . '/lib/employees/employeesModel.js?
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Banco</label>
+                                <select id="cbo_entity" name="cbo_entity" class="form-control" >
+                                    <option value="0" >Seleccionar</option>
+                                    <?php if(sizeof($listEntity) > 0){ ?>
+                                        <?php foreach ($listEntity as $entity){ ?>
+                                            <?php $selected = (isset($data->number) && $entity->ruc === $data->ruc) ? "selected" : ""; ?>
+                                            <option value="<?= $entity->ruc; ?>" data-number="<?= $entity->number_length; ?>" <?= $selected; ?> ><?= $entity->name; ?></option>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Número de Cuenta</label>
+                                <?php $number = (isset($data->number) && !empty($data->number)) ? $data->number : ""; ?>
+                                <?php $number_length = (isset($data->number_length) && !empty($data->number_length)) ? $data->number_length : 0; ?>
+                                <input type="text" id="number_account" name="number_account" class="form-control" maxlength="<?= $number_length; ?>" data-number="<?= $number_length; ?>" value="<?= $number; ?>" >
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label>Dirección</label>
-                        <input type="text" id="address_1" name="address_1" class="form-control" value="<?= $employee->person->address_1; ?>" >
+                        <textarea id="address_1" name="address_1" class="form-control" cols="25" rows="5" >
+                            <?= $employee->person->address_1; ?>
+                        </textarea>
                     </div>
+                    <input id="data_employee" name="data_employee" type="hidden" />
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </form>
                 <div id="messages"></div>

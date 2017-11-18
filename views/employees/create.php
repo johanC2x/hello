@@ -52,11 +52,34 @@ $this->registerJsFile(Yii::getAlias('@web') . '/lib/employees/employeesModel.js?
                                 <input type="text" id="phone_number" name="phone_number" class="form-control" >
                             </div>
                         </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Banco</label>
+                                <select id="cbo_entity" name="cbo_entity" class="form-control" >
+                                    <option value="0" >Seleccionar</option>
+                                    <?php if(sizeof($listEntity) > 0){ ?>
+                                        <?php foreach ($listEntity as $entity){ ?>
+                                            <option value="<?= $entity->ruc; ?>" data-number="<?= $entity->number_length; ?>"><?= $entity->name; ?></option>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Número de Cuenta</label>
+                                <input type="text" id="number_account" name="number_account" class="form-control" data-number="0" >
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Dirección</label>
-                        <input type="text" id="address_1" name="address_1" class="form-control" >
+                        <!--<input type="text" id="address_1" name="address_1" class="form-control" >-->
+                        <textarea id="address_1" name="address_1" class="form-control" cols="25" rows="5" ></textarea>
                     </div>
+                    <input id="data_employee" name="data_employee" type="hidden" />
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </form>
                 <div id="messages"></div>

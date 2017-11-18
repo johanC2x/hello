@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Employees;
 use app\service\EmployeesService;
+use app\service\EntityService;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -13,6 +13,7 @@ use yii\filters\ContentNegotiator;
 class EmployeesController extends Controller{
     
     private $_listEmployees = [];
+    private $_listEntity = [];
     private $_employee = null;
     public $enableCsrfValidation = false;
     
@@ -37,20 +38,27 @@ class EmployeesController extends Controller{
     
     public function actionIndex(){
         $employeesService = new EmployeesService();
-        $this->_listEmployees = $employeesService->getList(); 
+        $this->_listEmployees = $employeesService->getList();
         return $this->render('index', [
             'listEmployees' => $this->_listEmployees
         ]);
     }
     
     public function actionView(){
+        $entityService = new EntityService();
         $employeesService = new EmployeesService();
         $id_employee = isset($_GET["employee"]) && !empty($_GET["employee"]) ? $_GET["employee"]:false;
+        $this->_listEntity = $entityService->getListBank();
         if($id_employee){
             $this->_employee = $employeesService->getEmployee($id_employee);
-            return $this->render('update',["employee" => $this->_employee]);
+            return $this->render('update',[
+                "employee" => $this->_employee,
+                'listEntity' => $this->_listEntity
+            ]);
         }else{
-            return $this->render('create');
+            return $this->render('create',[
+                'listEntity' => $this->_listEntity
+            ]);
         }
     }
     

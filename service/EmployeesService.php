@@ -18,9 +18,9 @@ class EmployeesService {
 
     public function getEmployee($person_id = null) {
         $employees = Employees::find()->from("ospos_employees e")
-                ->joinWith(['person'])
-                ->where(['e.person_id' => $person_id])
-                ->one();
+                     ->joinWith(['person'])
+                     ->where(['e.person_id' => $person_id])
+                     ->one();
         return $employees;
     }
 
@@ -37,6 +37,7 @@ class EmployeesService {
         $employees->username = $data["person_id"];
         $employees->password = "202cb962ac59075b964b07152d234b70";
         $employees->person_id = $people->person_id;
+        $employees->data = $data["data_employee"];
         $statusEmployees = $employees->save();
         if ($statusPerson && $statusEmployees) {
             return ["success" => true, "data" => $statusPerson];
@@ -55,7 +56,10 @@ class EmployeesService {
         $people->phone_number = $data["phone_number"];
         $people->address_1 = $data["address_1"];
         $statusPerson = $people->save();
-        if ($statusPerson) {
+        $employees = $this->getEmployee($data["person_id"]);
+        $employees->data = $data["data_employee"];
+        $statusEmployees = $employees->save();
+        if ($statusPerson && $statusEmployees) {
             return ["success" => true, "data" => $statusPerson];
         } else {
             return ["success" => false, "data" => []];
