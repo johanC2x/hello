@@ -79,6 +79,7 @@ $(document).on("ready", function () {
         var msg = "";
         var data_employee = {};
         data_employee.ruc = $("#cbo_entity").val();
+        data_employee.bank = $("#cbo_entity option:selected").text();
         data_employee.number = $("#number_account").val();
         data_employee.number_length = $("#cbo_entity option:selected").attr("data-number");
         $("#data_employee").val(JSON.stringify(data_employee));

@@ -29,7 +29,7 @@
                             <th>DNI</th>
                             <th>NOMBRES</th>
                             <th>NRO. CUENTA</th>
-                            <th>DIRECCIÓN</th>
+                            <th>BANCO</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -42,7 +42,7 @@
                                     <td><?= $employees->person_id ?></td>
                                     <td><?= $employees->person->first_name." ".$employees->person->last_name ?></td>
                                     <td><?= (isset($data->number) && !empty($data->number)) ? $data->number : ""; ?></td>
-                                    <td><?= $employees->person->address_1 ?></td>
+                                    <td><?= (isset($data->bank) && !empty($data->bank)) ? $data->bank : ""; ?></td>
                                     <td>
                                         <center>
                                             <a href="<?= Url::to(['employees/view',"employee" => $employees->person_id]); ?>" title="Editar">
