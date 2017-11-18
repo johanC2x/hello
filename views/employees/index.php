@@ -29,7 +29,7 @@
                             <th></th>
                             <th>DNI</th>
                             <th>NOMBRES</th>
-                            <th>TELÉFONO</th>
+                            <th>NRO. CUENTA</th>
                             <th>DIRECCIÓN</th>
                             <th>ACCIONES</th>
                         </tr>
@@ -37,6 +37,7 @@
                     <tbody>
                         <?php if (sizeof($listEmployees) > 0) { ?>
                             <?php foreach ($listEmployees as $employees) { ?>
+                                <?php $data = json_decode($employees->data); ?>
                                 <tr>
                                     <td>
                                         <center>
@@ -47,7 +48,7 @@
                                     </td>
                                     <td><?= $employees->person_id ?></td>
                                     <td><?= $employees->person->first_name." ".$employees->person->last_name ?></td>
-                                    <td><?= $employees->person->phone_number ?></td>
+                                    <td><?= (isset($data->number) && !empty($data->number)) ? $data->number : ""; ?></td>
                                     <td><?= $employees->person->address_1 ?></td>
                                     <td>
                                         <center>
