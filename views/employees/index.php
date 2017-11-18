@@ -26,11 +26,11 @@
                 <table id="tbl_employees" class="table table-bordered" >
                     <thead>
                         <tr>
-                            <th></th>
                             <th>DNI</th>
                             <th>NOMBRES</th>
                             <th>NRO. CUENTA</th>
                             <th>DIRECCIÓN</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -39,13 +39,6 @@
                             <?php foreach ($listEmployees as $employees) { ?>
                                 <?php $data = json_decode($employees->data); ?>
                                 <tr>
-                                    <td>
-                                        <center>
-                                            <a onclick="employeesModel.deleteEmployee(<?= $employees->person_id; ?>)" href="javascript:void(0);" title="Eliminar">
-                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                            </a>
-                                        </center>
-                                    </td>
                                     <td><?= $employees->person_id ?></td>
                                     <td><?= $employees->person->first_name." ".$employees->person->last_name ?></td>
                                     <td><?= (isset($data->number) && !empty($data->number)) ? $data->number : ""; ?></td>
@@ -54,6 +47,13 @@
                                         <center>
                                             <a href="<?= Url::to(['employees/view',"employee" => $employees->person_id]); ?>" title="Editar">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </a>
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            <a onclick="employeesModel.deleteEmployee(<?= $employees->person_id; ?>)" href="javascript:void(0);" title="Eliminar">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </a>
                                         </center>
                                     </td>
