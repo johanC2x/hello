@@ -31,7 +31,7 @@
                             <th>NOMBRES</th>
                             <th>NRO. CUENTA</th>
                             <th>DIRECCIÓN</th>
-                            <th>ACCIONES</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
