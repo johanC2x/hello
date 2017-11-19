@@ -29,4 +29,11 @@ class EntityService {
         return $listEntity;
     }
     
+    public function getEntity($ruc = null){
+        $entity = Entity::find()->from("ospos_entity e")
+                     ->where(['e.ruc' => $ruc])
+                     ->one();
+        return $entity;
+    }
+    
 }

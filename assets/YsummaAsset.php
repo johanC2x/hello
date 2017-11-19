@@ -23,8 +23,8 @@ class YsummaAsset extends AssetBundle {
         'https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js',
         'js/jquery.metisMenu.js',
         'js/raphael-2.1.0.min.js',
-        'js/morris.js',
         'js/custom-scripts.js',
+        'js/morris.js',
         'lib/util.js'
     ];
     public $depends = [

@@ -101,6 +101,23 @@ class EmployeesController extends Controller{
         return json_encode($response);
     }
     
+    public function actionUpdatedata(){
+        $response = [];
+        $employeesService = new EmployeesService();
+        if (Yii::$app->request->post()) {
+            $data = Yii::$app->request->post();
+            if(sizeof($data) > 0 && !empty($data)){
+                $result = $employeesService->updateEmployeeData($data);
+                $response = ($result["success"]) ? ["success" => true , "response" => "Operación Correcta"] : ["success" => false , "response" => "Error"];
+            }else{
+                $response = ["success" => false , "response" => "Error"];
+            }
+        }else{
+            $response = ["success" => false , "response" => "Error"];
+        }
+        return json_encode($response);
+    }
+    
     public function actionDelete(){
         $employeesService = new EmployeesService();
         $id_employee = isset($_POST["employee_delete"]) && !empty($_POST["employee_delete"]) ? $_POST["employee_delete"]:false;
@@ -108,6 +125,43 @@ class EmployeesController extends Controller{
             $employeesService->deleteEmployee($id_employee);
         }
         return $this->redirect(['employees/index']);
+    }
+    
+    public function actionPayment(){
+        $employeesService = new EmployeesService();
+        $entityService = new EntityService();
+        $id_employee = isset($_GET["employee"]) && !empty($_GET["employee"]) ? $_GET["employee"]:false;
+        if($id_employee){
+            $entity = false;
+            $this->_employee = $employeesService->getEmployee($id_employee);
+            $data = isset($this->_employee->data) ? json_decode($this->_employee->data) : "";
+            if(!empty($data)){
+                $entity = $entityService->getEntity($data->ruc);
+            }
+            return $this->render('payment',[
+                "employee" => $this->_employee,
+                'entity' => $entity
+            ]);
+        }
+    }
+    
+    public function actionGetemployee(){
+        $employeesService = new EmployeesService();
+        $id_employee = isset($_GET["employee"]) && !empty($_GET["employee"]) ? $_GET["employee"]:false;
+        $this->_listEmployees = $employeesService->getList();
+        if($id_employee){
+            $this->_employee = $employeesService->getEmployee($id_employee);
+            Yii::$app->session->setFlash('viewEmployee');
+            return $this->render('index',[
+                "employee" => $this->_employee,
+                'listEmployees' => $this->_listEmployees
+            ]);
+        }else{
+            return $this->render('index',[
+                "employee" => false,
+                'listEmployees' => $this->_listEmployees
+            ]);
+        }
     }
     
 }

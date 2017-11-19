@@ -119,58 +119,45 @@ YsummaAsset::register($this);
                 <div class="sidebar-collapse">
                     <ul class="nav" id="main-menu">
                         <li>
-                            <a class="active-menu" href="<?= Url::to(['/']); ?>">
+                            <a class="active-menu sub-menu" onclick="addActive();" href="<?= Url::to(['/']); ?>">
                                 <i class="fa fa-dashboard"></i>Home
                             </a>
                         </li>
                         <li>
-                            <a href="<?= Url::to(['user/']); ?>">
+                            <a class="sub-menu" href="<?= Url::to(['user/']); ?>">
                                 <i class="fa fa-user"></i>Usuarios
                             </a>
                         </li>
                         <li>
-                            <a href="<?= Url::to(['customer/']); ?>">
+                            <a class="sub-menu" href="<?= Url::to(['customer/']); ?>">
                                 <i class="fa fa-hand-o-down"></i>Clientes
                             </a>
                         </li>
-                         <li>
-                            <a href="<?= Url::to(['employees/']); ?>">
+                        <li>
+                            <a class="sub-menu" href="<?= Url::to(['employees/']); ?>">
                                 <i class="fa fa-arrows-alt"></i> Empleados
                             </a>
                         </li>
                         <li>
-                            <a href="<?= Url::to(['suppliers/']); ?>">
+                            <a class="sub-menu" href="<?= Url::to(['suppliers/']); ?>">
                                 <i class="fa fa-phone"></i> Proveedores
                             </a>
                         </li>
-                        
-<!--                        <li>
-                            <a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap"></i>Módulo del Empleador<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Second Level Link</a>
+                                    <a class="sub-menu" href="<?= Url::to(['employees/']); ?>">
+                                        <i class="fa fa-bars"></i> Empleados
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="#">Second Level Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Second Level Link<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="#">Third Level Link</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Link</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Link</a>
-                                        </li>
-
-                                    </ul>
-
+                                    <a class="sub-menu" href="#3">
+                                        <i class="fa fa-bars"></i>Second Level Link
+                                    </a>
                                 </li>
                             </ul>
-                        </li>-->
+                        </li>
 <!--                        <li>
                             <a href="empty.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
                         </li>-->
@@ -185,6 +172,14 @@ YsummaAsset::register($this);
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" >
+        <?php if (Yii::$app->session->hasFlash('viewEmployee')) { ?>
+            $(document).ready(function(){
+                $("#modal_data_employees").modal("show");
+            });
+        <?php } ?> 
+    </script>
     <?php $this->endBody() ?>
 </body>
 </html>

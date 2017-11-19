@@ -29,6 +29,68 @@ $(document).on("ready", function () {
         $("#number_account").attr("maxlength",number);
     });
     
+    $("#frm_employees_pay").bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            cbo_entity_account: {
+                validators: {
+                    notEmpty: {message: "El campo cuenta banco es requerido"}
+                }
+            },
+            payment_sol: {
+                validators: {
+                    notEmpty: {message: "El campo pago soles es requerido"}
+                }
+            },
+            cbo_month: {
+                validators: {
+                    notEmpty: {message: "El campo mes es requerido"}
+                }
+            },
+            cbo_year: {
+                validators: {
+                    notEmpty: {message: "El campo año es requerido"}
+                }
+            }
+        }
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+        var msg = "";
+        var data_employee = {};
+        data_employee.ruc = $("#cbo_entity").attr("data-ruc");
+        data_employee.bank = $("#cbo_entity").val();
+        data_employee.number = $("#number_account").val();
+        data_employee.number_length = $("#number_account").attr("data-number");
+        var payment = {};
+        payment.account = $("#cbo_entity_account").val();
+        payment.pay_sol = $("#payment_sol").val();
+        payment.pay_dol = $("#payment_dol").val();
+        payment.ret_ct = $("#ck_pay_ct").prop("checked");
+        payment.ret_qt = $("#ck_pay_qt").prop("checked");    
+        data_employee.payment = payment;
+        var payment_account = [];
+        $("#data_employee").val(JSON.stringify(data_employee));
+        $.ajax({
+            type: 'POST',
+            data: $("#frm_employees_pay").serialize(),
+            url: $("#frm_employees_pay").attr('action'),
+            success: function (response) {
+                var data = JSON.parse(response);
+                if(!data.success){
+                    msg = getMessagesDanger(data.response);
+                    $("#messages").html(msg);
+                }else{
+                    msg = getMessagesSuccess(data.response);
+                    $("#messages").html(msg);
+                }
+            }
+        });
+    });
+    
     $('#frm_employees').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',

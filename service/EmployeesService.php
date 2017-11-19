@@ -66,6 +66,17 @@ class EmployeesService {
         }
     }
     
+    public function updateEmployeeData($data = null){
+        $employees = $this->getEmployee($data["person_id"]);
+        $employees->data = $data["data_employee"];
+        $statusEmployees = $employees->save();
+        if ($statusEmployees) {
+            return ["success" => true, "data" => $statusEmployees];
+        } else {
+            return ["success" => false, "data" => []];
+        }
+    }
+    
     public function deleteEmployee($person_id = null){
         $employee = $this->getEmployee($person_id);
         if(sizeof($employee) > 0){
