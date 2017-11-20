@@ -96,5 +96,24 @@ var employeesModel = function () {
         }
     };
     
+    self.exportPayment = function(){
+        var day = getCurrentDay();
+        $.ajax({
+            type: 'GET',
+            data:{},
+            dataType: 'text',
+            url: "export/getexportfile",
+            success: function (response) {
+                var filename = 'Pagos_' + day + '.txt';
+                var a = document.createElement('a');
+                a.href = 'data:attachment/txt;charset=utf-8,' + encodeURIComponent(response);
+                a.target = '_blank';
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+            }
+        });
+    };
+    
     return self;
 }(jQuery);

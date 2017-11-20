@@ -134,11 +134,6 @@ YsummaAsset::register($this);
                             </a>
                         </li>
                         <li>
-                            <a class="sub-menu" href="<?= Url::to(['employees/']); ?>">
-                                <i class="fa fa-arrows-alt"></i> Empleados
-                            </a>
-                        </li>
-                        <li>
                             <a class="sub-menu" href="<?= Url::to(['suppliers/']); ?>">
                                 <i class="fa fa-phone"></i> Proveedores
                             </a>
@@ -148,12 +143,12 @@ YsummaAsset::register($this);
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a class="sub-menu" href="<?= Url::to(['employees/']); ?>">
-                                        <i class="fa fa-bars"></i> Empleados
+                                        <i class="fa fa-bars"></i> Registrar Empleados
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="sub-menu" href="#3">
-                                        <i class="fa fa-bars"></i>Second Level Link
+                                    <a class="sub-menu" href="<?= Url::to(['export/']); ?>">
+                                        <i class="fa fa-bars"></i> Exportar Planillas
                                     </a>
                                 </li>
                             </ul>

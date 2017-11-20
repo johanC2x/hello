@@ -115,19 +115,19 @@
                 <form role="form" >
                     <div class="form-group">
                         <label>DNI</label>
-                        <input type="text" id="person_id" name="person_id" class="form-control" value="<?= $employee->person->person_id; ?>" >
+                        <input type="text" id="person_id" name="person_id" class="form-control" value="<?= $employee->person->person_id; ?>" disabled="true" />
                     </div>
                     <div class="row">                
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Nombres</label>
-                                <input type="text" id="first_name" name="first_name" class="form-control" value="<?= $employee->person->first_name; ?>" >
+                                <input type="text" id="first_name" name="first_name" class="form-control" value="<?= $employee->person->first_name; ?>" disabled="true" />
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Apellidos</label>
-                                <input type="text" id="last_name" name="last_name" class="form-control" value="<?= $employee->person->last_name; ?>" >
+                                <input type="text" id="last_name" name="last_name" class="form-control" value="<?= $employee->person->last_name; ?>" disabled="true" />
                             </div>
                         </div>
                     </div>
@@ -135,13 +135,13 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" id="email" name="email" class="form-control" value="<?= $employee->person->email; ?>" >
+                                <input type="email" id="email" name="email" class="form-control" value="<?= $employee->person->email; ?>" disabled="true" />
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Teléfono</label>
-                                <input type="text" id="phone_number" name="phone_number" class="form-control" value="<?= $employee->person->phone_number; ?>" >
+                                <input type="text" id="phone_number" name="phone_number" class="form-control" value="<?= $employee->person->phone_number; ?>" disabled="true" />
                             </div>
                         </div>
                     </div>
@@ -150,7 +150,7 @@
                             <div class="form-group">
                                 <label>Banco</label>
                                 <?php $bank = (isset($data->bank) && !empty($data->bank)) ? $data->bank : ""; ?>
-                                <input id="cbo_entity" name="cbo_entity" type="text" value="<?= $bank; ?>" class="form-control"/>
+                                <input id="cbo_entity" name="cbo_entity" type="text" value="<?= $bank; ?>" class="form-control" disabled="true"/>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -158,13 +158,13 @@
                                 <label>Número de Cuenta</label>
                                 <?php $number = (isset($data->number) && !empty($data->number)) ? $data->number : ""; ?>
                                 <?php $number_length = (isset($data->number_length) && !empty($data->number_length)) ? $data->number_length : 0; ?>
-                                <input type="text" id="number_account" name="number_account" class="form-control" maxlength="<?= $number_length; ?>" data-number="<?= $number_length; ?>" value="<?= $number; ?>" >
+                                <input type="text" id="number_account" name="number_account" class="form-control" maxlength="<?= $number_length; ?>" data-number="<?= $number_length; ?>" value="<?= $number; ?>" disabled="true" />
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Dirección</label>
-                        <textarea id="address_1" name="address_1" class="form-control" cols="25" rows="5" >
+                        <textarea id="address_1" name="address_1" class="form-control" cols="25" rows="5" disabled="true">
                             <?= $employee->person->address_1; ?>
                         </textarea>
                     </div>

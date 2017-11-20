@@ -31,6 +31,10 @@ $(document).on("ready", function () {
         $("#number_account").attr("maxlength",number);
     });
     
+    $("#btn_export").click(function(){
+        self.exportPayment();
+    });
+    
     $("#frm_employees_pay").bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
