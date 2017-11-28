@@ -19,6 +19,7 @@ use Yii;
  * @property string $country
  * @property string $comments
  * @property integer $person_id
+ * @property integer $document_id
  *
  * @property OsposCustomers[] $osposCustomers
  * @property OsposEmployees[] $osposEmployees
@@ -72,24 +73,26 @@ class People extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOsposCustomers()
-    {
+    public function getOsposCustomers(){
         return $this->hasMany(OsposCustomers::className(), ['person_id' => 'person_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOsposEmployees()
-    {
-        return $this->hasMany(OsposEmployees::className(), ['person_id' => 'person_id']);
+    public function getOsposEmployees(){
+        return $this->hasMany(Employees::className(), ['person_id' => 'person_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOsposSuppliers()
-    {
+    public function getOsposSuppliers(){
         return $this->hasMany(OsposSuppliers::className(), ['person_id' => 'person_id']);
     }
+    
+    public function getOsposDocument(){
+        return $this->hasOne(Code::className(), ['id' => 'document_id']);
+    }
+    
 }

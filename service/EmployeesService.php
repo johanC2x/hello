@@ -15,13 +15,39 @@ class EmployeesService {
                 ->all();
         return $listEmployees;
     }
-
+    
+    public function getListFilter($ruc = null,$nro = null,$año = null,$mes = null){
+        $query = (new \yii\db\Query());
+        $query->select("*")->from('ospos_employees e');
+        $query->where("e.deleted = 0");
+        if($ruc){
+            $query->andWhere("JSON_CONTAINS(e.data->"."\""."$"."\"".", '{"."\""."ruc"."\"".":"."\"".$ruc."\""."}')");
+        }
+        if($nro){
+            $query->andWhere("JSON_CONTAINS(e.data->"."\""."$"."\"".", '{"."\""."number"."\"".":"."\"".$nro."\""."}')");
+        }
+        if($año){
+            $query->andWhere("JSON_CONTAINS(e.data->"."\""."$.payment_account"."\"".", '{"."\""."year"."\"".":"."\"".$año."\""."}')");
+        }
+        if($mes){
+            $query->andWhere("JSON_CONTAINS(e.data->"."\""."$.payment_account"."\"".", '{"."\""."month"."\"".":"."\"".$mes."\""."}')");
+        }
+        $command = $query->createCommand();
+        $result = $command->queryAll();
+        return $result;
+    }
+    
     public function getEmployee($person_id = null) {
         $employees = Employees::find()->from("ospos_employees e")
                      ->joinWith(['person'])
                      ->where(['e.person_id' => $person_id])
                      ->one();
         return $employees;
+    }
+    
+    public function getMaxCode(){
+        $code= Employees::find()->from("ospos_employees")->where(['deleted' => 0])->max('code');
+        return $code;
     }
 
     public function insertEmployees($data = null) {
@@ -32,11 +58,14 @@ class EmployeesService {
         $people->email = $data["email"];
         $people->phone_number = $data["phone_number"];
         $people->address_1 = $data["address_1"];
+        $people->document_id = $data["type_document"];
         $statusPerson = $people->save();
+        
         $employees = new Employees();
         $employees->username = $data["person_id"];
         $employees->password = "202cb962ac59075b964b07152d234b70";
         $employees->person_id = $people->person_id;
+        $employees->code = $data["code"];
         $employees->data = $data["data_employee"];
         $statusEmployees = $employees->save();
         if ($statusPerson && $statusEmployees) {

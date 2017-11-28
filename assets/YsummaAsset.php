@@ -12,6 +12,9 @@ class YsummaAsset extends AssetBundle {
         'css/font-awesome.css',
         'css/custom-styles.css',
         'css/bootstrapValidator.min.css',
+        'css/bootstrap-datetimepicker.min.css',
+        'css/build.css',
+        'css/ysumma.css',
         'http://fonts.googleapis.com/css?family=Open+Sans',
         'https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css'
     ];
@@ -20,6 +23,7 @@ class YsummaAsset extends AssetBundle {
         //'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js',
         'js/bootstrap.min.js',
         'js/bootstrapValidator.min.js',
+        'js/bootstrap-datetimepicker.min.js',
         'https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js',
         'js/jquery.metisMenu.js',
         'js/raphael-2.1.0.min.js',

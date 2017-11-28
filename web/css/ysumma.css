@@ -1,0 +1,23 @@
+a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+}
+
+.controls {
+    margin-bottom: 10px;
+}
+
+.collapse-group {
+    padding: 10px;
+    border: 1px solid darkgrey;
+    margin-bottom: 10px;
+}
+
+.panel-title .trigger:before {
+    content: '\e082';
+    font-family: 'Glyphicons Halflings';
+    vertical-align: text-bottom;
+}
+
+.panel-title .trigger.collapsed:before {
+    content: '\e081';
+}

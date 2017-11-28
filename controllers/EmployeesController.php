@@ -5,15 +5,23 @@ namespace app\controllers;
 use Yii;
 use app\service\EmployeesService;
 use app\service\EntityService;
+use app\service\CodeService;
+use app\service\PositionService;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\filters\ContentNegotiator;
+use app\util\Constantes as constantes;
 
 class EmployeesController extends Controller{
     
+    use constantes;
+    
+    private $_codeEmployee = "";
     private $_listEmployees = [];
     private $_listEntity = [];
+    private $_listTypeDocument = [];
+    private $_listPosition = [];
     private $_employee = null;
     public $enableCsrfValidation = false;
     
@@ -45,19 +53,31 @@ class EmployeesController extends Controller{
     }
     
     public function actionView(){
+        $codeService = new CodeService();
         $entityService = new EntityService();
         $employeesService = new EmployeesService();
-        $id_employee = isset($_GET["employee"]) && !empty($_GET["employee"]) ? $_GET["employee"]:false;
+        $positionService = new PositionService();
+        
+        $this->_codeEmployee = $employeesService->getMaxCode();
         $this->_listEntity = $entityService->getListBank();
+        $this->_listTypeDocument = $codeService->getCodeByType($this->_CODE_TYPE_DOCUMENT);
+        $this->_listPosition = $positionService->getList();
+        
+        $id_employee = isset($_GET["employee"]) && !empty($_GET["employee"]) ? $_GET["employee"]:false;
         if($id_employee){
             $this->_employee = $employeesService->getEmployee($id_employee);
             return $this->render('update',[
                 "employee" => $this->_employee,
-                'listEntity' => $this->_listEntity
+                'listEntity' => $this->_listEntity,
+                'listTypeDocument' => $this->_listTypeDocument,
+                'listPosition' => $this->_listPosition
             ]);
         }else{
             return $this->render('create',[
-                'listEntity' => $this->_listEntity
+                'listEntity' => $this->_listEntity,
+                'listTypeDocument' => $this->_listTypeDocument,
+                'codeEmployee' => $this->_codeEmployee,
+                'listPosition' => $this->_listPosition
             ]);
         }
     }

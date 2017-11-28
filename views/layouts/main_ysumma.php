@@ -169,6 +169,18 @@ YsummaAsset::register($this);
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script type="text/javascript" >
+        $(document).ready(function(){
+            $('.collapse').collapse('show');
+            $('.form_date').datetimepicker({
+                format: 'mm/dd/yyyy',
+                weekStart: 1,
+                todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2
+            });
+        });
         <?php if (Yii::$app->session->hasFlash('viewEmployee')) { ?>
             $(document).ready(function(){
                 $("#modal_data_employees").modal("show");

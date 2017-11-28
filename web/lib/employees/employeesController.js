@@ -17,6 +17,10 @@ $(document).on("ready", function () {
     
     $('#tbl_employees_payment').DataTable();
 
+    $("#code").attr("disabled",true);
+    
+    $("#code_generate").prop("checked",true);
+
     $("#btn_modal_employees").click(function () {
         $("#modal_employees").modal("show");
     });
@@ -29,6 +33,30 @@ $(document).on("ready", function () {
         var number = $("#cbo_entity option:selected").attr("data-number");
         $("#number_account").attr("data-number",number);
         $("#number_account").attr("maxlength",number);
+        
+        var account = JSON.parse($("#cbo_entity option:selected").attr("data-account"));
+        $('#cbo_entity_account option').remove();
+        $('#cbo_entity_account').append($("<option></option>").attr("value","").text("Seleccionar"));
+        if(account.length > 0){
+            for (var i = 0;i < account.length; i++) {
+                $('#cbo_entity_account').append($("<option></option>").attr("value",account[i].value.account).text(account[i].value.account + "-" +account[i].value.name.toUpperCase()));
+            }
+        }
+    });
+    
+    $("#type_document").change(function(){
+        var number = $("#type_document option:selected").attr("data-length");
+        $("#person_id").attr("maxlength",number);
+    });
+    
+    $("#code_generate").change(function(){
+        if($("#code_generate").prop("checked")){
+            $("#code").val($("#code").attr("data-code"));
+            $("#code").attr("disabled",true);
+        }else{
+            $("#code").val("");
+            $("#code").attr("disabled",false);
+        }
     });
     
     $("#btn_export").click(function(){
@@ -80,9 +108,19 @@ $(document).on("ready", function () {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
+            type_document:{
+                validators: {
+                    notEmpty: {message: "El tipo de documento es requerido"}
+                }
+            },
             person_id: {
                 validators: {
                     notEmpty: {message: "El campo dni es requerido"}
+                }
+            },
+            code: {
+                validators: {
+                    notEmpty: {message: "El campo código es requerido"}
                 }
             },
             first_name: {
@@ -93,6 +131,16 @@ $(document).on("ready", function () {
             last_name: {
                 validators: {
                     notEmpty: {message: "El campo apellidos es requerido"}
+                }
+            },
+            date_start:{
+                validators: {
+                    notEmpty: {message: "El campo fecha de inicio es requerido"}
+                }
+            },
+            date_end:{
+                validators: {
+                    notEmpty: {message: "El campo fecha de finalización es requerido"}
                 }
             },
             email: {
@@ -126,22 +174,32 @@ $(document).on("ready", function () {
         data_employee.bank = $("#cbo_entity option:selected").text();
         data_employee.number = $("#number_account").val();
         data_employee.number_length = $("#cbo_entity option:selected").attr("data-number");
+        data_employee.date_ini = $("#date_start").val();
+        data_employee.date_end = $("#date_end").val();
+        
+        var entity = {};
+        entity.ruc = $("#cbo_entity").val();
+        entity.name = $("#cbo_entity option:selected").text();
+        entity.desc = $("#cbo_entity option:selected").attr("data-short");
+        data_employee.entity = entity;
+        
         $("#data_employee").val(JSON.stringify(data_employee));
-        $.ajax({
-            type: 'POST',
-            data: $("#frm_employees").serialize(),
-            url: $("#frm_employees").attr('action'),
-            success: function (response) {
-                var data = JSON.parse(response);
-                if(!data.success){
-                    msg = getMessagesDanger(data.response);
-                    $("#messages").html(msg);
-                }else{
-                    msg = getMessagesSuccess(data.response);
-                    $("#messages").html(msg);
-                }
-            }
-        });
+        
+//        $.ajax({
+//            type: 'POST',
+//            data: $("#frm_employees").serialize(),
+//            url: $("#frm_employees").attr('action'),
+//            success: function (response) {
+//                var data = JSON.parse(response);
+//                if(!data.success){
+//                    msg = getMessagesDanger(data.response);
+//                    $("#messages").html(msg);
+//                }else{
+//                    msg = getMessagesSuccess(data.response);
+//                    $("#messages").html(msg);
+//                }
+//            }
+//        });
     });
     
 });

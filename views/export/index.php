@@ -17,6 +17,55 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                   <a role="button" data-toggle="collapse" href="#collapseTwo" 
+                       aria-expanded="true" aria-controls="collapseTwo" class="trigger collapsed">
+                        Filtros de Pagos
+                   </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <form role="form" class="form-inline" method="GET" action="<?= Url::to(['export/filter']); ?>" >
+                        <div class="form-group">
+                            <select class="form-control" id="ruc" name="ruc">
+                                <option value="" >Seleccionar Banco</option>
+                                <?php if(sizeof($listEntityBank) > 0){ ?>
+                                    <?php foreach ($listEntityBank as $bank){ ?>
+                                        <option value="<?= $bank->ruc; ?>" ><?= $bank->name; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="nrocuenta" name="nrocuenta" class="form-control" placeholder="Nro. Cuenta"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="year" name="year" class="form-control" placeholder="Año" />
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="month" name="month" >
+                                <option value="" >Seleccionar Mes</option>
+                                <?php if(sizeof($listMonth) > 0){ ?>
+                                    <?php $value = 1; ?>
+                                    <?php foreach ($listMonth as $month){ ?>
+                                        <option value="<?= $value; ?>" ><?= $month; ?></option>
+                                        <?php $value++; ?>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Buscar Pagos
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <a id="btn_export" href="javascript:void(0);" class="btn btn-primary">
                     Exportar Pagos

@@ -19,8 +19,13 @@ use app\models\SalesSuspended;
  * @property integer $person_id
  * @property integer $deleted
  * @property string $data
+ * @property integer $position_id
+ * @property string $code
+ * @property string $created_at
+ * @property string $updated_at
  *
  * @property OsposPeople $person
+ * @property OsposPosition $position
  * @property OsposInventory[] $osposInventories
  * @property OsposPermissions[] $osposPermissions
  * @property OsposModules[] $modules
@@ -41,6 +46,7 @@ class Employees extends \yii\db\ActiveRecord{
             [['data'], 'safe'],
             [['username', 'password'], 'string', 'max' => 255],
             [['username'], 'unique'],
+            [['created_at', 'updated_at','position_id'], 'safe'],
             [['person_id'], 'exist', 'skipOnError' => true, 'targetClass' => People::className(), 'targetAttribute' => ['person_id' => 'person_id']],
         ];
     }
@@ -56,6 +62,10 @@ class Employees extends \yii\db\ActiveRecord{
 
     public function getPerson(){
         return $this->hasOne(People::className(), ['person_id' => 'person_id']);
+    }
+    
+    public function getPosition(){
+        return $this->hasOne(Position::className(), ['position_id' => 'id']);
     }
 
     public function getOsposInventories(){

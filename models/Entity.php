@@ -9,6 +9,7 @@ use Yii;
  *
  * @property string $ruc
  * @property string $name
+ * @property string $name_short
  * @property integer $flg_bank
  * @property integer $flg_salud
  * @property integer $flg_educ
@@ -35,7 +36,7 @@ class Entity extends \yii\db\ActiveRecord
         return [
             [['ruc', 'name'], 'required'],
             [['flg_bank', 'flg_salud', 'flg_educ','status'], 'integer'],
-            [['status','created_at', 'updated_at', 'number_length', 'flg_bank', 'flg_salud', 'flg_educ'], 'safe'],
+            [['status','name_short','created_at', 'updated_at', 'number_length', 'flg_bank', 'flg_salud', 'flg_educ'], 'safe'],
             [['ruc'], 'string', 'max' => 12],
             [['name'], 'string', 'max' => 200],
         ];
