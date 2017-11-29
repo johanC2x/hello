@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\service\EmployeesService;
+use app\service\PaymentService;
 use app\service\EntityService;
 use app\service\CodeService;
 use app\service\PositionService;
@@ -21,6 +22,7 @@ class EmployeesController extends Controller{
     private $_listEmployees = [];
     private $_listEntity = [];
     private $_listTypeDocument = [];
+    private $_listPayment = [];
     private $_listPosition = [];
     private $_employee = null;
     public $enableCsrfValidation = false;
@@ -57,6 +59,7 @@ class EmployeesController extends Controller{
         $entityService = new EntityService();
         $employeesService = new EmployeesService();
         $positionService = new PositionService();
+        $paymentService = new PaymentService();
         
         $this->_codeEmployee = $employeesService->getMaxCode();
         $this->_listEntity = $entityService->getListBank();
@@ -66,11 +69,13 @@ class EmployeesController extends Controller{
         $id_employee = isset($_GET["employee"]) && !empty($_GET["employee"]) ? $_GET["employee"]:false;
         if($id_employee){
             $this->_employee = $employeesService->getEmployee($id_employee);
+            $this->_listPayment = $paymentService->getListByEmployee($id_employee);
             return $this->render('update',[
                 "employee" => $this->_employee,
                 'listEntity' => $this->_listEntity,
                 'listTypeDocument' => $this->_listTypeDocument,
-                'listPosition' => $this->_listPosition
+                'listPosition' => $this->_listPosition,
+                'listPayment' => $this->_listPayment
             ]);
         }else{
             return $this->render('create',[
@@ -150,17 +155,21 @@ class EmployeesController extends Controller{
     public function actionPayment(){
         $employeesService = new EmployeesService();
         $entityService = new EntityService();
+        $paymentService = new PaymentService();
+        
         $id_employee = isset($_GET["employee"]) && !empty($_GET["employee"]) ? $_GET["employee"]:false;
         if($id_employee){
             $entity = false;
             $this->_employee = $employeesService->getEmployee($id_employee);
+            $this->_listPayment = $paymentService->getListByEmployee($id_employee);
             $data = isset($this->_employee->data) ? json_decode($this->_employee->data) : "";
             if(!empty($data)){
                 $entity = $entityService->getEntity($data->ruc);
             }
             return $this->render('payment',[
                 "employee" => $this->_employee,
-                'entity' => $entity
+                'entity' => $entity,
+                'listPayment' => $this->_listPayment
             ]);
         }
     }

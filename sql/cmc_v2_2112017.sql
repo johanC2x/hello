@@ -5,7 +5,7 @@ SET time_zone = '+00:00';
 
 DROP TABLE IF EXISTS `dd_prueba`;
 CREATE TABLE `dd_prueba` (
-  `data` json NOT NULL
+  `data` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -23,7 +23,7 @@ CREATE TABLE `ospos_code` (
   `name` varchar(1000) NOT NULL,
   `key` varchar(1000) NOT NULL,
   `type` varchar(1000) NOT NULL,
-  `data` json NOT NULL,
+  `data` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -51,6 +51,8 @@ CREATE TABLE `ospos_employees` (
   `code` text,
   `data` text,
   `deleted` int(1) NOT NULL DEFAULT '0',
+  `date_start` date DEFAULT NULL,
+  `date_end` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   UNIQUE KEY `username` (`username`),
@@ -67,7 +69,7 @@ CREATE TABLE `ospos_entity` (
   `flg_bank` int(11) DEFAULT NULL,
   `flg_salud` int(11) DEFAULT NULL,
   `flg_educ` int(11) DEFAULT NULL,
-  `data` json DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `number_length` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT '0',
   `created_at` datetime DEFAULT NULL,
@@ -177,6 +179,25 @@ CREATE TABLE `ospos_modules` (
   UNIQUE KEY `desc_lang_key` (`desc_lang_key`),
   UNIQUE KEY `name_lang_key` (`name_lang_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ospos_payment`;
+CREATE TABLE `ospos_payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `payment_sol` double NOT NULL,
+  `payment_dol` double NOT NULL,
+  `payment_dscto` double NOT NULL,
+  `cuentad` int(11) DEFAULT NULL,
+  `cuentah` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `employee_id` (`employee_id`),
+  CONSTRAINT `ospos_payment_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `ospos_employees` (`person_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `ospos_people`;
@@ -394,4 +415,4 @@ CREATE TABLE `ospos_suppliers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 2017-11-28 21:58:16
+-- 2017-11-29 04:58:26

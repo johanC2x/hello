@@ -147,6 +147,32 @@ $util = new Util();
                 </form>
                 <div id="messages"></div>
                 <br/>
+                <?php if(isset($listPayment) && sizeof($listPayment) > 0){ ?>
+                    <table id="tbl_employees_payment" class="table table-bordered" >
+                        <thead>
+                            <tr>
+                                <th>AÑO</th>
+                                <th>MES</th>
+                                <th>PAGO SOLES</th>
+                                <th>PAGO DOLARES</th>
+                                <th>DSCTO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $index = 0;?>
+                            <?php foreach ($listPayment as $payment){?>
+                                <tr>
+                                    <td><?= isset($payment->year) ? $payment->year:""; ?></td>
+                                    <td><?= isset($payment->month) ? $util->getMonth($payment->month):""; ?></td>
+                                    <td><?= isset($payment->payment_sol) && !empty($payment->payment_sol) ? number_format($payment->payment_sol,2):number_format(0,2); ?></td>
+                                    <td><?= isset($payment->payment_dol) && !empty($payment->payment_dol) ? number_format($payment->payment_dol,2):number_format(0,2); ?></td>
+                                    <td><?= isset($payment->payment_dscto) && !empty($payment->payment_dscto) ? number_format($payment->payment_dscto,2):number_format(0,2); ?></td>
+                                </tr>
+                                <?php $index++;?>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                <?php } ?>
                 <?php if(isset($data->payment_account) && sizeof($data->payment_account) > 0){ ?>
                 <table id="tbl_employees_payment" class="table table-bordered" >
                     <thead>

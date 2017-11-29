@@ -21,6 +21,8 @@ use app\models\SalesSuspended;
  * @property string $data
  * @property integer $position_id
  * @property string $code
+ * @property string $date_start
+ * @property string $date_end
  * @property string $created_at
  * @property string $updated_at
  *
@@ -46,7 +48,7 @@ class Employees extends \yii\db\ActiveRecord{
             [['data'], 'safe'],
             [['username', 'password'], 'string', 'max' => 255],
             [['username'], 'unique'],
-            [['created_at', 'updated_at','position_id'], 'safe'],
+            [['created_at', 'updated_at','position_id','date_start','date_end'], 'safe'],
             [['person_id'], 'exist', 'skipOnError' => true, 'targetClass' => People::className(), 'targetAttribute' => ['person_id' => 'person_id']],
         ];
     }

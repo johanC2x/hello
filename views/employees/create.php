@@ -12,7 +12,7 @@ $this->registerJsFile(Yii::getAlias('@web') . '/lib/employees/employeesModel.js?
     <div class="col-md-12">
         <ul class="breadcrumb"><li><a href="<?= Url::to(['/']); ?>">Home</a></li>
             <li class="active"><a href="<?= Url::to(['employees/index']); ?>">Empleados</a></li>
-            <li class="active">Nuevo Empleado <?php echo date('Y-m-d',strtotime('11/15/2017')); ?></li>
+            <li class="active">Nuevo Empleado</li>
         </ul>
     </div>
 </div>

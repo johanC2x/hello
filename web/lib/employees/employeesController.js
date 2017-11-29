@@ -184,22 +184,22 @@ $(document).on("ready", function () {
         data_employee.entity = entity;
         
         $("#data_employee").val(JSON.stringify(data_employee));
-        
-//        $.ajax({
-//            type: 'POST',
-//            data: $("#frm_employees").serialize(),
-//            url: $("#frm_employees").attr('action'),
-//            success: function (response) {
-//                var data = JSON.parse(response);
-//                if(!data.success){
-//                    msg = getMessagesDanger(data.response);
-//                    $("#messages").html(msg);
-//                }else{
-//                    msg = getMessagesSuccess(data.response);
-//                    $("#messages").html(msg);
-//                }
-//            }
-//        });
+        $.ajax({
+            type: 'POST',
+            data: $("#frm_employees").serialize(),
+            url: $("#frm_employees").attr('action'),
+            success: function (response) {
+                console.log(response);
+                var data = JSON.parse(response);
+                if(!data.success){
+                    msg = getMessagesDanger(data.response);
+                    $("#messages").html(msg);
+                }else{
+                    msg = getMessagesSuccess(data.response);
+                    $("#messages").html(msg);
+                }
+            }
+        });
     });
     
 });
