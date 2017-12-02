@@ -122,8 +122,6 @@ class EmployeesService {
                 }
             }
         }
-        echo "pase";
-        exit();
         if ($statusPerson && $statusEmployees) {
             return ["success" => true, "data" => $statusPerson];
         } else {
