@@ -51,7 +51,7 @@ class EmployeesService {
         return $code;
     }
 
-    public function insertEmployees($data = null) {  
+    public function insertEmployees($data = null) {
         /* INSERT PEOPLE */
         $people = new People();
         $people->person_id = $data["person_id"];

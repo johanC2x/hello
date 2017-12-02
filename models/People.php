@@ -42,7 +42,7 @@ class People extends \yii\db\ActiveRecord
     {
         return [
             [['first_name', 'last_name', 'phone_number', 'email', 'address_1'], 'required'],
-            [['address_2', 'city', 'state', 'zip', 'country', 'comments'], 'safe'],
+            [['address_2','address_1','phone_number', 'city', 'state', 'zip', 'country', 'comments'], 'safe'],
             [['comments'], 'string'],
             [['first_name', 'last_name', 'phone_number', 'email', 'address_1', 'address_2', 'city', 'state', 'zip', 'country'], 'string', 'max' => 255],
             [['person_id'], 'unique'],
