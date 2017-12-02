@@ -75,8 +75,6 @@ class EmployeesService {
         $employees->date_end = date('Y-m-d',strtotime($data["date_end"]));
         $statusEmployees = $employees->save();
         
-        echo "pase";
-        exit();
         /* INSERT PAYMENT */
         $month = 0;
         $date_loop = (int)abs((strtotime($data["date_start"]) - strtotime($data["date_end"]))/(60*60*24*30));
@@ -124,6 +122,8 @@ class EmployeesService {
                 }
             }
         }
+        echo "pase";
+        exit();
         if ($statusPerson && $statusEmployees) {
             return ["success" => true, "data" => $statusPerson];
         } else {
