@@ -22,7 +22,7 @@ $this->registerJsFile(Yii::getAlias('@web') . '/lib/employees/employeesModel.js?
             <div class="panel-body">
                 <form id="frm_employees" method="POST" action="<?= Url::to(['employees/save']); ?>" >
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group" >
                                 <label>Tipo de Documento</label>
                                 <select id="type_document" name="type_document" class="form-control" >
@@ -49,7 +49,7 @@ $this->registerJsFile(Yii::getAlias('@web') . '/lib/employees/employeesModel.js?
                                 <input type="text" id="code" name="code" class="form-control" value="<?= ($codeEmployee + 1); ?>" data-code="<?= ($codeEmployee + 1); ?>"/>
                             </div>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-1">
                             <div class="form-group">
                                 <br/>
                                 <div class="checkbox checkbox-primary">
@@ -60,6 +60,18 @@ $this->registerJsFile(Yii::getAlias('@web') . '/lib/employees/employeesModel.js?
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <br/>
+                                <div class="checkbox checkbox-primary">
+                                    <input id="ck_prueba" name="ck_prueba" class="styled" type="checkbox" checked="">
+                                    <label for="ck_prueba">
+                                        En Prueba
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <input id="flg_prueba" name="flg_prueba" type="hidden" value="0" />
                     </div>
                     <div class="row">                
                         <div class="col-lg-6">

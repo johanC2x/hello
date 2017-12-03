@@ -102,8 +102,9 @@ var employeesModel = function () {
             type: 'GET',
             data:{},
             dataType: 'text',
-            url: "export/getexportfile",
+            url: "/employees/getexportfile",
             success: function (response) {
+                console.log(response);
                 var filename = 'Pagos_' + day + '.txt';
                 var a = document.createElement('a');
                 a.href = 'data:attachment/txt;charset=utf-8,' + encodeURIComponent(response);

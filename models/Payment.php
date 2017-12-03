@@ -16,6 +16,7 @@ use Yii;
  * @property double $payment_dscto
  * @property integer $cuentad
  * @property integer $cuentah
+ * @property integer $code_state_payment
  * @property string $created_at
  * @property string $updated_at
  *
@@ -37,7 +38,7 @@ class Payment extends \yii\db\ActiveRecord{
             [['employee_id', 'year', 'month', 'payment_sol', 'payment_dol', 'payment_dscto'], 'required'],
             [['employee_id', 'year', 'month', 'cuentad', 'cuentah'], 'integer'],
             [['payment_sol', 'payment_dol', 'payment_dscto'], 'number'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'code_state_payment', 'updated_at'], 'safe'],
             [['employee_id'], 'exist', 'skipOnError' => true, 'targetClass' => Employees::className(), 'targetAttribute' => ['employee_id' => 'person_id']],
         ];
     }

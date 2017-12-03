@@ -3,12 +3,6 @@
 SET NAMES utf8;
 SET time_zone = '+00:00';
 
-DROP TABLE IF EXISTS `dd_prueba`;
-CREATE TABLE `dd_prueba` (
-  `data` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
 DROP TABLE IF EXISTS `ospos_app_config`;
 CREATE TABLE `ospos_app_config` (
   `key` varchar(255) NOT NULL,
@@ -55,6 +49,7 @@ CREATE TABLE `ospos_employees` (
   `date_end` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `prueba` int(11) DEFAULT '0',
   UNIQUE KEY `username` (`username`),
   KEY `person_id` (`person_id`),
   CONSTRAINT `ospos_employees_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `ospos_people` (`person_id`)
@@ -69,7 +64,7 @@ CREATE TABLE `ospos_entity` (
   `flg_bank` int(11) DEFAULT NULL,
   `flg_salud` int(11) DEFAULT NULL,
   `flg_educ` int(11) DEFAULT NULL,
-  `data` text DEFAULT NULL,
+  `data` text,
   `number_length` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT '0',
   `created_at` datetime DEFAULT NULL,
@@ -192,6 +187,7 @@ CREATE TABLE `ospos_payment` (
   `payment_dscto` double NOT NULL,
   `cuentad` int(11) DEFAULT NULL,
   `cuentah` int(11) DEFAULT NULL,
+  `code_state_payment` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -205,9 +201,9 @@ CREATE TABLE `ospos_people` (
   `person_id` int(10) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
-  `phone_number` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `address_1` varchar(255) NOT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `address_1` varchar(255) DEFAULT NULL,
   `address_2` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
@@ -415,4 +411,4 @@ CREATE TABLE `ospos_suppliers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 2017-11-29 04:58:26
+-- 2017-12-03 03:26:42

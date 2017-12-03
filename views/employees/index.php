@@ -21,6 +21,9 @@
                 <a href="<?= Url::to(['employees/view']); ?>" class="btn btn-primary">
                     Nuevo Empleado
                 </a>
+                <a id="btn_export" href="javascript:void(0);" class="btn btn-primary">
+                    Exportar Pagos
+                </a>
             </div>
             <div class="panel-body">
                 <table id="tbl_employees" class="table table-bordered" >
@@ -30,6 +33,7 @@
                             <th>NOMBRES</th>
                             <th>NRO. CUENTA</th>
                             <th>BANCO</th>
+                            <th>E</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -44,7 +48,11 @@
                                     <td><?= $employees->person_id ?></td>
                                     <td><?= $employees->person->first_name." ".$employees->person->last_name ?></td>
                                     <td><?= (isset($data->number) && !empty($data->number)) ? $data->number : ""; ?></td>
-                                    <td><?= (isset($data->bank) && !empty($data->bank)) ? $data->bank : ""; ?></td>
+                                    <td><?= (isset($data->entity->desc) && !empty($data->entity->desc)) ? $data->entity->desc : ""; ?></td>
+                                    <td>
+                                        <?php $bandera = (isset($employees->prueba) && $employees->prueba === 1) ? "red" : "green"; ?>
+                                        <i class="fa fa-flag" aria-hidden="true" style="color: <?= $bandera; ?>;"></i>
+                                    </td>
                                     <td>
                                         <center>
                                             <a href="<?= Url::to(['employees/getemployee',"employee" => $employees->person_id]); ?>" title="Ver">

@@ -193,4 +193,53 @@ class EmployeesController extends Controller{
         }
     }
     
+    public function actionGetexportfile(){
+        header('Content-Type: text/txt; charset=utf-8');
+        header('Content-Disposition: attachment; filename=data.txt');
+        $output = fopen('php://output', 'w');
+        $codeService = new CodeService();
+        $employeesService = new EmployeesService();
+        $paymentService = new PaymentService();
+        $listPayment = $paymentService->getList();
+
+        $listCodeHead = $codeService->getCodeByTypeAndKey("file_export","file-head-bcp");
+        $listCodeDetail = $codeService->getCodeByTypeAndKey("file_export","file-detail-bcp");
+        $dataHead = json_decode($listCodeHead[0]->data);
+        $dataDetail = json_decode($listCodeDetail[0]->data);
+        $detail = "";
+        
+        //CABECERA DE ARCHIVO
+        $detail .= isset($dataHead->file_head_bcp->content[0]->default) ? str_repeat(" ",($dataHead->file_head_bcp->content[0]->length - strlen($dataHead->file_head_bcp->content[0]->default))).$dataHead->file_head_bcp->content[0]->default : "";
+        $detail .= isset($dataHead->file_head_bcp->content[1]->default) ? str_repeat(" ",($dataHead->file_head_bcp->content[1]->length - strlen($dataHead->file_head_bcp->content[1]->default))).$dataHead->file_head_bcp->content[1]->default : "";
+        $detail .= str_repeat(" ",($dataHead->file_head_bcp->content[2]->length - strlen(str_replace("/", "", date("Y/m/d"))))).str_replace("/", "", date("Y/m/d"));
+        $detail .= isset($dataHead->file_head_bcp->content[4]->default) ? str_repeat(" ",($dataHead->file_head_bcp->content[4]->length - strlen($dataHead->file_head_bcp->content[4]->default))).$dataHead->file_head_bcp->content[4]->default : "";
+        $detail .= isset($dataHead->file_head_bcp->content[5]->default) ? str_repeat(" ",($dataHead->file_head_bcp->content[5]->length - strlen($dataHead->file_head_bcp->content[5]->default))).$dataHead->file_head_bcp->content[5]->default : "";
+        $detail .= isset($dataHead->file_head_bcp->content[6]->default) ? str_repeat(" ",($dataHead->file_head_bcp->content[6]->length - strlen($dataHead->file_head_bcp->content[6]->default))).$dataHead->file_head_bcp->content[6]->default : "";
+        $detail .= isset($dataHead->file_head_bcp->content[7]->default) ? str_repeat(" ",($dataHead->file_head_bcp->content[7]->length - strlen($dataHead->file_head_bcp->content[7]->default))).$dataHead->file_head_bcp->content[7]->default : "";
+        $detail .= isset($dataHead->file_head_bcp->content[8]->default) ? str_repeat(" ",($dataHead->file_head_bcp->content[8]->length - strlen($dataHead->file_head_bcp->content[8]->default))).$dataHead->file_head_bcp->content[8]->default : "";
+        $detail .= isset($dataHead->file_head_bcp->content[9]->default) ? str_repeat(" ",($dataHead->file_head_bcp->content[9]->length - strlen($dataHead->file_head_bcp->content[9]->default))).$dataHead->file_head_bcp->content[9]->default : "";
+        
+        //DETALLE DE ARCHIVO
+        foreach ($listPayment as $payment){
+            if(sizeof($dataDetail->file_detail_bcp->content) > 0){         
+                $detail .= isset($dataDetail->file_detail_bcp->content[0]->default) ? str_repeat(" ",($dataDetail->file_detail_bcp->content[0]->length - strlen($dataDetail->file_detail_bcp->content[0]->default))).$dataDetail->file_detail_bcp->content[0]->default : "";
+                $detail .= isset(json_decode($payment->employee->data)->number) && !empty(json_decode($payment->employee->data)->number) ? 
+                            json_decode($payment->employee->data)->number.str_repeat(" ",($dataDetail->file_detail_bcp->content[1]->length - strlen(json_decode($payment->employee->data)->number))): 
+                                "".str_repeat(" ",($dataDetail->file_detail_bcp->content[1]->length - strlen("")));
+                $detail .= "1";
+                $detail .= str_repeat(" ",($dataDetail->file_detail_bcp->content[3]->length - strlen($payment->employee->person_id))).$payment->employee->person_id;
+                $detail .= str_repeat(" ",$dataDetail->file_detail_bcp->content[4]->length);
+                $detail .= str_repeat(" ",$dataDetail->file_detail_bcp->content[5]->length - strlen($payment->employee->person->first_name.$payment->employee->person->last_name)).$payment->employee->person->first_name.$payment->employee->person->last_name;
+                $detail .= str_repeat(" ",$dataDetail->file_detail_bcp->content[6]->length);
+                $detail .= str_repeat(" ",$dataDetail->file_detail_bcp->content[7]->length);
+                $detail .= isset($dataDetail->file_detail_bcp->content[8]->default) ? str_repeat(" ",($dataDetail->file_detail_bcp->content[8]->length - strlen($dataDetail->file_detail_bcp->content[8]->default))).$dataDetail->file_detail_bcp->content[8]->default : "";
+                $detail .= str_repeat("0",($dataDetail->file_detail_bcp->content[9]->length - strlen($payment->payment_sol))).$payment->payment_sol."\n";
+            }
+        }
+        fputs($output, $detail);
+        Yii::$app->end();
+    }
+    
+    
+    
 }

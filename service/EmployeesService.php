@@ -42,6 +42,7 @@ class EmployeesService {
         $employees = Employees::find()->from("ospos_employees e")
                      ->joinWith(['person'])
                      ->where(['e.person_id' => $person_id])
+                     ->andWhere(['e.deleted' => 0])
                      ->one();
         return $employees;
     }
@@ -70,6 +71,7 @@ class EmployeesService {
         $employees->person_id = $people->person_id;
         $employees->position_id = $data["postion_id"];
         $employees->code = isset($data["code"]) ? $data["code"] : ($this->getMaxCode() + 1);
+        $employees->prueba = (int)$data["flg_prueba"];
         $employees->data = $data["data_employee"];
         $employees->date_start = date('Y-m-d',strtotime($data["date_start"]));
         $employees->date_end = date('Y-m-d',strtotime($data["date_end"]));
@@ -89,8 +91,8 @@ class EmployeesService {
                     $payment->payment_sol = $data["pay_sol"];
                     $payment->payment_dol = $data["pay_dol"];
                     $payment->payment_dscto = 0;
-                    $payment->cuentad = 123;
-                    $payment->cuentah = 321;
+                    $payment->cuentad = 4111;
+                    $payment->cuentah = 1041;
                     $payment->save();
                 }
             }else{
@@ -103,8 +105,9 @@ class EmployeesService {
                     $payment->payment_sol = $data["pay_sol"];
                     $payment->payment_dol = $data["pay_dol"];
                     $payment->payment_dscto = 0;
-                    $payment->cuentad = 123;
-                    $payment->cuentah = 321;
+                    $payment->cuentad = 4111;
+                    $payment->cuentah = 1041;
+                    $payment->code_state_payment = 7;
                     $payment->save();
                 }
                 $month_end = date('m',strtotime($data["date_end"]));
@@ -116,8 +119,9 @@ class EmployeesService {
                     $payment->payment_sol = $data["pay_sol"];
                     $payment->payment_dol = $data["pay_dol"];
                     $payment->payment_dscto = 0;
-                    $payment->cuentad = 123;
-                    $payment->cuentah = 321;
+                    $payment->cuentad = 4111;
+                    $payment->cuentah = 1041;
+                    $payment->code_state_payment = 7;
                     $payment->save();
                 }
             }

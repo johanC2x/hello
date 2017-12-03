@@ -25,6 +25,16 @@ $(document).on("ready", function () {
         $("#modal_employees").modal("show");
     });
     
+    $("#ck_prueba").prop("checked",false);
+    
+    $("#ck_prueba").change(function(){
+        if($("#ck_prueba").prop("checked")){
+            $("#flg_prueba").val(1);
+        }else{
+            $("#flg_prueba").val(0);
+        }
+    });
+    
     $("#btn_delete_employee").click(function(){
         $("#frm_delete_employees").submit();
     });

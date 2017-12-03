@@ -56,14 +56,6 @@ $util = new Util();
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Número de Cuenta</label>
-                                <?php $number = (isset($data->number) && !empty($data->number)) ? $data->number : ""; ?>
-                                <?php $number_length = (isset($data->number_length) && !empty($data->number_length)) ? $data->number_length : 0; ?>
-                                <input type="text" id="number_account" name="number_account" class="form-control" maxlength="<?= $number_length; ?>" data-number="<?= $number_length; ?>" value="<?= $number; ?>" disabled="true"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
                             <label>Cuenta Banco</label>
                             <?php if(isset($dataEntity->account) && sizeof($dataEntity->account) > 0){ ?>
                                 <select id="cbo_entity_account" name="cbo_entity_account" class="form-control" >
@@ -75,6 +67,20 @@ $util = new Util();
                                     <?php } ?>
                                 </select>
                             <?php } ?>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Descuentos</label>
+                                <select id="cbo_pay_ret" name="cbo_pay_ret" class="form-control" >
+                                    <option value="" >Seleccionar</option>
+                                    <option value="DR" data-name="Retención de 4° categoría">
+                                        Descuentos de Rentas
+                                    </option>
+                                    <option value="DJ" data-name="Retención de 5° categoría">
+                                        Descuentos Judiciales
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -107,39 +113,6 @@ $util = new Util();
                         <div class="col-lg-3">
                             <label>Descuento</label>
                             <input id="payment_dscto" name="payment_dscto" type="number" class="form-control" min="0.00" step="0.01" value="0"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Año</label>
-                                <select id="cbo_year" name="cbo_entity_account" class="form-control" >
-                                    <option value="" >Seleccionar</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Mes</label>
-                                <select id="cbo_month" name="cbo_entity_account" class="form-control" >
-                                    <option value="" >Seleccionar</option>
-                                    <option value="1" >Enero</option>
-                                    <option value="2" >Febrero</option>
-                                    <option value="3" >Marzo</option>
-                                    <option value="4" >Abril</option>
-                                    <option value="5" >Mayo</option>
-                                    <option value="6" >Junio</option>
-                                    <option value="7" >Julio</option>
-                                    <option value="8" >Agosto</option>
-                                    <option value="9" >Setiembre</option>
-                                    <option value="10" >Octubre</option>
-                                    <option value="11" >Noviembre</option>
-                                    <option value="12" >Diciembre</option>
-                                </select>
-                            </div>
                         </div>
                     </div>
                     <input id="data_employee" name="data_employee" type="hidden" value='<?= json_encode($data); ?>'/>
